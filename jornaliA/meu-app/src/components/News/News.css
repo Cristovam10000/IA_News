@@ -1,0 +1,20 @@
+/* src/components/News/News.css */
+.news-list {
+  margin-top: 1rem;
+}
+.news-item {
+  margin-bottom: 2rem;
+}
+.news-item h1 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+.news-item em,
+.news-item i {
+  color: #555;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+.news-item p {
+  margin-bottom: 1rem;
+}
