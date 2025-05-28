@@ -1,4 +1,4 @@
-# IA Jornal
+# IA News
 
 Projeto full-stack que integra **FastAPI + Google GenAI** no back-end e **React + Vite** no front-end para gerar, via pipeline de agentes, um jornal em **Markdown** contendo as principais notícias globais (ou de um tópico escolhido pelo usuário).
 
