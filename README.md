@@ -1,92 +1,104 @@
-# IA Jornal API
+# IA Jornal
 
-Uma API em **FastAPI** que utiliza agentes do Google GenAI (Gemini) para gerar automaticamente um "jornal" com as principais notícias do mundo em formato Markdown. O conteúdo é orquestrado por quatro agentes:
+Projeto full-stack que integra **FastAPI + Google GenAI** no back-end e **React + Vite** no front-end para gerar, via pipeline de agentes, um jornal em **Markdown** contendo as principais notícias globais (ou de um tópico escolhido pelo usuário).
 
-1. **Buscador**: coleta temas e eventos internacionais relevantes.
-2. **Planejador**: aprofunda dados e estrutura um plano de reportagem.
-3. **Redator**: redige três matérias completas em Markdown.
-4. **Revisor**: garante formatação e clareza no resultado final.
+---
 
-O endpoint `/jornal` retorna um JSON com o Markdown pronto, que pode ser renderizado em qualquer front-end (por exemplo, React).
+## 📋 Sumário
+
+- [Sobre](#sobre)  
+- [Funcionalidades](#funcionalidades)  
+- [Tecnologias](#tecnologias)  
+- [Pré-requisitos](#pré-requisitos)  
+- [Instalação](#instalação)  
+  - [Backend](#backend)  
+  - [Frontend](#frontend)  
+- [Como executar](#como-executar)  
+- [Estrutura de Pastas](#estrutura-de-pastas)  
+- [Uso](#uso)  
+- [Agradecimentos](#agradecimentos)  
+- [Licença](#licença)
+
+---
+
+## Sobre
+
+### Backend 🔧  
+- **FastAPI** serve a rota `GET /jornal?topic=<tópico>`  
+- Pipeline de **4 agentes** Gemini (`google-genai`):  
+  1. ***Buscador* —** coleta temas recentes via Google Search  
+  2. ***Planejador* —** define pontos-chave  
+  3. ***Redator* —** escreve matérias em Markdown  
+  4. ***Revisor* —** garante clareza e formatação  
+- Responde com JSON `{ "markdown": "…" }`.
+
+### Frontend 🎨  
+- **React + Vite**  
+- Campo para escolher tópico (padrão: “principais notícias do mundo”).  
+- Faz *fetch* na rota `/jornal`, recebe Markdown e converte em HTML com **react-markdown**.  
+- Componentes separados em `Button`, `TopicSelector`, `News`.
 
 ---
 
 ## Funcionalidades
 
-* Busca e seleção dos temas mais comentados no último mês.
-* Produção de matérias estruturadas em Markdown, com títulos, subtítulos em itálico e separadores `---`.
-* Pipeline assíncrono de agentes Gemini (gemini-2.0-flash).
-* Endpoint RESTful com validação e documentação automática (Swagger UI).
-* CORS configurado para permitir conexões de front-ends.
+- Busca de notícias por tópico em tempo real  
+- Geração automática de conteúdo jornalístico (IA)  
+- Markdown convertido em HTML responsivo  
+- CORS habilitado → integração front/back sem dor de cabeça  
+
+---
+
+## Tecnologias
+
+| Camada  | Techs |
+|---------|-------|
+| **Back**| Python 3.10+, FastAPI, Uvicorn, google-genai (Gemini API), Pydantic |
+| **Front**| Node.js, Vite, React, react-markdown |
 
 ---
 
 ## Pré-requisitos
 
-* Python 3.9 ou superior
-* Node.js (v16+) e npm/yarn (opcional, para front-end React)
-* Conta e API key do Google GenAI (configurada na variável `GOOGLE_API_KEY`)
+- **Git**  
+- **Python 3.10+**  
+- **Node.js** 16+ e **npm**  
+- Chave da **Google GenAI** → variável `GOOGLE_API_KEY`
 
 ---
 
-## Instalação e Configuração
+## Instalação
 
-1. Clone o repositório:
-
-   ```bash
-   git clone https://github.com/SEU_USUARIO/ia-jornal-api.git
-   cd ia-jornal-api
-   ```
-
-2. Crie um ambiente virtual e ative-o:
-
-   * **Linux/macOS**:
-
-     ```bash
-     python3 -m venv venv
-     source venv/bin/activate
-     ```
-
-   * **Windows**:
-
-     ```powershell
-     python -m venv venv
-     venv\Scripts\activate
-     ```
-
-3. Instale as dependências:
-
-   ```bash
-   pip install fastapi uvicorn google-genai
-   ```
-
-4. Defina sua chave de API do Google GenAI:
-
-   * **Linux/macOS**:
-
-     ```bash
-     export GOOGLE_API_KEY="SUA_CHAVE_AQUI"
-     ```
-   * **Windows (PowerShell)**:
-
-     ```powershell
-     $Env:GOOGLE_API_KEY = "SUA_CHAVE_AQUI"
-     ```
-
----
-
-## Executando a API
-
-Inicie o servidor de desenvolvimento com recarga automática:
+### Backend
 
 ```bash
+# 1 · Clone o repo
+git clone https://github.com/SEU_USUARIO/IA-Jornal.git
+cd IA-Jornal
+
+# 2 · Crie & ative venv
+python -m venv venv
+# macOS/Linux
+source venv/bin/activate
+# Windows
+venv\Scripts\activate
+
+# 3 · Instale dependências
+pip install fastapi uvicorn google-genai pydantic
+
+# 4 · Defina a API key
+# macOS / Linux
+export GOOGLE_API_KEY="SUA_CHAVE_AQUI"
+# Windows CMD
+set GOOGLE_API_KEY="SUA_CHAVE_AQUI"
+# A partir da raiz 
+cd meu-app
+# 1. Instale as dependências
+npm install
+# 2.raiz do projeto
 uvicorn app:app --reload
-```
-
-* A API ficará disponível em: `http://127.0.0.1:8000`
-* Endpoint principal: `GET /jornal`
-* Documentação interativa: `http://127.0.0.1:8000/docs`
-
----
-
-
+# 3. na pasta do frontend
+npm run dev
+````
+### A gradecimentos
+Obrigado à Alura pela Imersão IA 3ª Edição, que me deu toda a base necessária para a construção deste backend!
